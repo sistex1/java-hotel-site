@@ -28,10 +28,16 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
   messages!:string[];
+  presentationTimes!:string;
 
   getMessages(): Observable<string[]>{
     return this.httpClient.get<string[]>(this.baseURL +"/welcome")
   }
+
+  getTimes(): Observable<string>{
+    return this.httpClient.get<string>(this.baseURL +"/presentation")
+  }
+
 
     ngOnInit(){
       this.roomsearch= new FormGroup({
@@ -41,6 +47,7 @@ export class AppComponent implements OnInit{
 
  //     this.rooms=ROOMS;
     this.getMessages().subscribe((data)=>{this.messages=data})
+    this.getTimes().subscribe((data)=>{this.presentationTimes=data})
 
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
 
